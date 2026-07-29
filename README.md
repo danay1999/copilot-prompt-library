@@ -32,7 +32,7 @@ More categories can be added over time (each in its own folder with a README).
 
 ## Working in this repository
 
-Prompts are validated by [`.github/scripts/validate_library.py`](./.github/scripts/validate_library.py), which checks layout, naming, README indexing, the `INPUTS` section, relative links, and repository-independence. Enable it locally as a pre-commit hook:
+Prompts are validated by [`.github/scripts/validate_library.py`](./.github/scripts/validate_library.py), which checks layout, naming, README indexing, the `INPUTS` section, relative links, and repository-independence. It runs in CI on every pull request, and you can enable it locally as a pre-commit hook:
 
 ```bash
 git config core.hooksPath .githooks

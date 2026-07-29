@@ -6,8 +6,8 @@
 #
 #     git config core.hooksPath .githooks
 #
-# Bypass a single commit with `git commit --no-verify`. This hook is currently
-# the only enforcement, so a bypassed violation will not be caught elsewhere.
+# Bypass a single commit with `git commit --no-verify`. CI runs the same
+# validator on every pull request, so a bypassed violation still gets caught.
 #
 # Note: this checks the working tree, not the staged snapshot. A partially staged
 # change can therefore pass or fail on content you have not staged yet; run the
