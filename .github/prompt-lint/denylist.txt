@@ -1,0 +1,21 @@
+# Terms that must never appear in a prompt or agent body.
+#
+# The golden rule is that every prompt works in *any* repository, so anything
+# naming one specific service, product, or codebase belongs in an input rather
+# than in the prompt text. Add a term here the first time it leaks.
+#
+# One term per line; matching is case-insensitive and whole-word.
+# Category READMEs are not checked.
+#
+# Seed this with your own service, product, and codebase names, e.g.:
+#
+#   MyService
+#   my-internal-codename
+#   MyCompanyInternalTool
+#
+# NOTE: this file is public. Do not paste confidential identifiers here just to
+# block them -- the denylist would then leak the very thing it guards. Keep
+# entries to names that are already public (your service/product names), and
+# handle non-public material with the rule in CONTRIBUTING.md instead: never
+# reproduce a non-public control catalog, taxonomy, or standard in a prompt
+# body; take it as an input and cite it by link.

@@ -1,0 +1,12 @@
+# Values that look service-specific but are genuinely org-wide, and so are
+# allowed to appear verbatim in a prompt body.
+#
+# The pattern checks (GUID, work-item reference, email address, Kusto cluster
+# host, Azure DevOps organization URL) fail the build by default. Add an entry
+# here only when the value is a shared platform endpoint or identity that every
+# consuming team uses identically -- never to silence a leak of your own
+# service's resources.
+#
+# One value per line. Matching is a substring comparison in both directions.
+#
+# Empty by default: nothing in this library needs an exception.

@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# Validates library structure and repository-independence before each commit.
+#
+# Enable once per clone:
+#
+#     git config core.hooksPath .githooks
+#
+# Bypass a single commit with `git commit --no-verify`. This hook is currently
+# the only enforcement, so a bypassed violation will not be caught elsewhere.
+#
+# Note: this checks the working tree, not the staged snapshot. A partially staged
+# change can therefore pass or fail on content you have not staged yet; run the
+# validator manually if that distinction matters for a given commit.
+
+script=".github/scripts/validate_library.py"
+
+# Nothing to do in a worktree that predates the validator.
+[ -f "$script" ] || exit 0
+
+# Pick the first interpreter that actually runs. Checking `command -v` alone is
+# not enough on Windows, where `python3` resolves to a Microsoft Store stub that
+# exists on PATH but fails when executed.
+python_bin=""
+for candidate in python3 python py; do
+    command -v "$candidate" >/dev/null 2>&1 || continue
+    if [ "$candidate" = "py" ]; then
+        if py -3 --version >/dev/null 2>&1; then
+            python_bin="py -3"
+            break
+        fi
+    elif "$candidate" --version >/dev/null 2>&1; then
+        python_bin="$candidate"
+        break
+    fi
+done
+
+if [ -z "$python_bin" ]; then
+    echo "pre-commit: no working python interpreter found; skipping library validation." >&2
+    exit 0
+fi
+
+# Intentionally unquoted: python_bin may be "py -3".
+if ! $python_bin "$script"; then
+    echo "" >&2
+    echo "pre-commit: library validation failed. Fix the violations above," >&2
+    echo "or bypass this commit with 'git commit --no-verify'." >&2
+    exit 1
+fi
